@@ -16,10 +16,11 @@ import pn.components.Component;
 
 public class TakeScreenShot extends TestListenerAdapter {
 
-	public final static String DIRECTORY_FOR_SCREEN= "target/surefire-reports/screenshot/";
+	public final static String DIRECTORY_FOR_SCREEN= "target/surefire-reports/html/screenshots/";
 	public void onTestFailure(ITestResult tr) {
 		super.onTestFailure(tr);
 		System.setProperty("org.uncommons.reportng.escape-output", "false");
+		
 		try {
 			File screenShot = getScreenShot();
 			tr.setAttribute("screenshot", screenShot.getName());
