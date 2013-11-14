@@ -11,7 +11,7 @@ import pn.pages.ProductsListPage;
 
 public class CheckInfoAndLinkTest extends BaseTest {
 
-	/*@Test(dataProvider = "readForTest", dataProviderClass = DataProviderTest.class)
+	@Test(dataProvider = "readForTest", dataProviderClass = DataProviderTest.class)
 	public void checkLinkOfProduct(String section, String category,
 			double countGoods) {
 		try {
@@ -32,7 +32,7 @@ public class CheckInfoAndLinkTest extends BaseTest {
 		} catch (NullPointerException e) {
 			log("<b><h3>" + "Some element is NOT FOUND!Maybe you have entered INCORRECT DATA!" + "</h3></b>");
 		}
-	}*/
+	}
 
 	@Test(dataProvider = "readForTest", dataProviderClass = DataProviderTest.class)
 	public void checkDescription(String section, String category,
