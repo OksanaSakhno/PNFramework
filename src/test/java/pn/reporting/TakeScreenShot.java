@@ -9,7 +9,7 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestResult;
-import org.testng.Reporter;
+import static pn.helpers.BaseTestHelper.*;
 import org.testng.TestListenerAdapter;
 import pn.components.Component;
 
@@ -18,6 +18,8 @@ public class TakeScreenShot extends TestListenerAdapter {
 
 	public final static String DIRECTORY_FOR_SCREEN= "target/surefire-reports/html/screenshots/";
 	private final static String SCREEN_SHOTS_FILE_EXTENTION = ".png";
+	
+	
 	public void onTestFailure(ITestResult tr) {
 		super.onTestFailure(tr);
 		System.setProperty("org.uncommons.reportng.escape-output", "false");
@@ -29,10 +31,11 @@ public class TakeScreenShot extends TestListenerAdapter {
 
 			String logString = String
 					.format("<br /><a href='%s'><img src='%s' hight='100' width='100' /></a>",
-		  "screenshots/" + dateFormat.format(date) + SCREEN_SHOTS_FILE_EXTENTION);
+							screenShot.getAbsolutePath(),
+							screenShot.getAbsolutePath());
 
-			Reporter.log("<br>Screenshot: ");
-			Reporter.log(logString);
+			log("<br>Screenshot: ");
+			log(logString);
 		} catch (Exception e) {
 			System.out.println("Error generating screenshot: " + e);
 		}
@@ -44,7 +47,7 @@ public class TakeScreenShot extends TestListenerAdapter {
 
 		File screenshot = ((TakesScreenshot) Component.getDriver())
 				.getScreenshotAs(OutputType.FILE);
-		String path = DIRECTORY_FOR_SCREEN + "/" + dateFormat.format(date) + SCREEN_SHOTS_FILE_EXTENTION;
+		String path = DIRECTORY_FOR_SCREEN + dateFormat.format(date) + SCREEN_SHOTS_FILE_EXTENTION;
 		File screenShotInFileSystem = new File(path);
 		try {
 			FileUtils.copyFile(screenshot, screenShotInFileSystem);
