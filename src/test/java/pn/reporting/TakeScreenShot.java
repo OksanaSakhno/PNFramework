@@ -16,7 +16,7 @@ import pn.components.Component;
 
 public class TakeScreenShot extends TestListenerAdapter {
 
-	public final static String DIRECTORY_FOR_SCREEN= "target/surefire-reports/html/screenshots";
+	public final static String DIRECTORY_FOR_SCREEN= "target/surefire-reports/html/screenshots/";
 	private final static String SCREEN_SHOTS_FILE_EXTENTION = ".png";
 	public void onTestFailure(ITestResult tr) {
 		super.onTestFailure(tr);
@@ -24,7 +24,7 @@ public class TakeScreenShot extends TestListenerAdapter {
 		
 		try {
 			File screenShot = getScreenShot();
-			tr.setAttribute("screenshot/", DIRECTORY_FOR_SCREEN + screenShot.getName());
+			tr.setAttribute("screenshot", DIRECTORY_FOR_SCREEN + screenShot.getName());
 			tr.setAttribute("screenshotURL", DIRECTORY_FOR_SCREEN + screenShot.getAbsolutePath());
 
 			String logString = String
@@ -45,7 +45,7 @@ public class TakeScreenShot extends TestListenerAdapter {
 
 		File screenshot = ((TakesScreenshot) Component.getDriver())
 				.getScreenshotAs(OutputType.FILE);
-		String path = dateFormat.format(date) + SCREEN_SHOTS_FILE_EXTENTION;
+		String path = DIRECTORY_FOR_SCREEN + "/" + dateFormat.format(date) + SCREEN_SHOTS_FILE_EXTENTION;
 		File screenShotInFileSystem = new File(path);
 		try {
 			FileUtils.copyFile(screenshot, screenShotInFileSystem);
