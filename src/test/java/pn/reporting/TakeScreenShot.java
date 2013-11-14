@@ -29,8 +29,7 @@ public class TakeScreenShot extends TestListenerAdapter {
 
 			String logString = String
 					.format("<br /><a href='%s'><img src='%s' hight='100' width='100' /></a>",
-							screenShot.getAbsolutePath(),
-							screenShot.getAbsolutePath());
+		  "screenshots/" + dateFormat.format(date) + SCREEN_SHOTS_FILE_EXTENTION);
 
 			Reporter.log("<br>Screenshot: ");
 			Reporter.log(logString);
