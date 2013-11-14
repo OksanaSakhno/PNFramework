@@ -24,7 +24,7 @@ public class BaseTest extends BaseTestHelper{
 	public void setUp() throws Exception {
 		PropertiesFileReader propertyReader = new PropertiesFileReader();
 		propertyReader.readPropertiesFile(nameFileProperties);
-		Component.setDriver(selectBrowser(propertyReader.getDriver(), propertyReader.getDriverDirChrome()));
+		Component.setDriver(selectBrowser(System.getProperty("browser"), propertyReader));
 		Component.getDriver().manage().timeouts().implicitlyWait(12, TimeUnit.SECONDS);
 		baseUrl = propertyReader.getBaseUrl();
 		excelFileForTests = PropertiesFileReader.getReadFromExcel();
