@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Reporter;
 import pn.configuration.WebDriverFactory;
+import pn.dataProvider.PropertiesFileReader;
+import pn.tests.BaseTest;
 
 public class BaseTestHelper {
 	
