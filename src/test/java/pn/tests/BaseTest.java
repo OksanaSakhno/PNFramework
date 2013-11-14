@@ -22,6 +22,7 @@ public class BaseTest extends BaseTestHelper{
 
 	@BeforeClass
 	public void setUp() throws Exception {
+		System.setProperty("org.uncommons.reportng.escape-output", "false");
 		PropertiesFileReader propertyReader = new PropertiesFileReader();
 		propertyReader.readPropertiesFile(nameFileProperties);
 		Component.setDriver(selectBrowser(System.getProperty("browser"), propertyReader));
