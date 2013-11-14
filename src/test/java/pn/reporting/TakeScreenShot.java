@@ -16,15 +16,16 @@ import pn.components.Component;
 
 public class TakeScreenShot extends TestListenerAdapter {
 
-	public final static String DIRECTORY_FOR_SCREEN= "target/surefire-reports/html/screenshots/";
-	public void onTestFailure(ITestResult tr) {
+		public final static String DIRECTORY_FOR_SCREEN= ".target/surefire-reports/html/";
+		private final static String SCREEN_SHOTS_FILE_EXTENTION = ".png";
+		public void onTestFailure(ITestResult tr) {
 		super.onTestFailure(tr);
 		System.setProperty("org.uncommons.reportng.escape-output", "false");
 		
 		try {
 			File screenShot = getScreenShot();
-			tr.setAttribute("screenshot", screenShot.getName());
-			tr.setAttribute("screenshotURL", screenShot.getAbsolutePath());
+			tr.setAttribute("screenshot", DIRECTORY_FOR_SCREEN + screenShot.getName());
+			tr.setAttribute("screenshotURL", DIRECTORY_FOR_SCREEN + screenShot.getAbsolutePath());
 
 			String logString = String
 					.format("<br /><a href='%s'><img src='%s' hight='100' width='100' /></a>",
@@ -44,7 +45,7 @@ public class TakeScreenShot extends TestListenerAdapter {
 
 		File screenshot = ((TakesScreenshot) Component.getDriver())
 				.getScreenshotAs(OutputType.FILE);
-		String path = DIRECTORY_FOR_SCREEN + dateFormat.format(date);
+		String path = DIRECTORY_FOR_SCREEN + dateFormat.format(date) + SCREEN_SHOTS_FILE_EXTENTION;
 		File screenShotInFileSystem = new File(path);
 		try {
 			FileUtils.copyFile(screenshot, screenShotInFileSystem);
