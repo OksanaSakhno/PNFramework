@@ -49,6 +49,7 @@ public class TakeScreenShot extends TestListenerAdapter {
 				.getScreenshotAs(OutputType.FILE);
 		String path = DIRECTORY_FOR_SCREEN + dateFormat.format(date) + SCREEN_SHOTS_FILE_EXTENTION;
 		File screenShotInFileSystem = new File(path);
+		
 		try {
 			FileUtils.copyFile(screenshot, screenShotInFileSystem);
 		} catch (IOException e) {
