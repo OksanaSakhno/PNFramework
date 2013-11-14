@@ -1,0 +1,6 @@
+read.fromExcelDir=testData/
+baseUrl=http://pn.com.ua/
+driver=chrome
+driverPathChrome=config/chromedriver.exe
+driverPathIE=config/IEDriverServer.exe
+driverPathOpera=config/
