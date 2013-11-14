@@ -73,18 +73,22 @@ public class ProductsCatalog extends Component{
 		return compareLink;
 	}
 	
-	public ProductDescription openDescriptByProductWithCompare(double element){
+	public ProductDescription openDescriptByProductWithCompare(double element) {
+		try {Thread.sleep(2000);} catch (InterruptedException e) {}
 		getAddLinkToCompare().get((int)element-1).click();
+		try {Thread.sleep(2000);} catch (InterruptedException e) {}
 		getProductsName().get((int)element-1).click();
 		return PageFactory.initElements(Component.getDriver(), ProductDescription.class);
 	}
 	
 	public ProductDescription openDescriptionProduct(double element){
+		try {Thread.sleep(2000);} catch (InterruptedException e) {}
 		getProductsName().get((int)element).click();
 		return PageFactory.initElements(Component.getDriver(), ProductDescription.class);
 	}
 	
 	public void openCompare(){
+		try {Thread.sleep(2000);} catch (InterruptedException e) {}
 		getCompareLink().get(1).click();
 	}
 	
