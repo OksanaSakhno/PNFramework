@@ -36,7 +36,7 @@
 						 <browser>${browser}</browser>
 					 </systemPropertyVariables>
 					<suiteXmlFiles>
-						<suiteXmlFile>TestSuits/${test_case}.xml</suiteXmlFile>
+						<suiteXmlFile>testSuits/${test_case}.xml</suiteXmlFile>
 					</suiteXmlFiles>
 					<properties>
 						<property>
