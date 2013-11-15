@@ -2,24 +2,21 @@ package pn.helpers;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import static pn.helpers.BaseTestHelper.*;
 
+import static pn.helpers.BaseTestHelper.*;
 import pn.components.Component;
 import pn.components.FunctionMenu;
 import pn.components.MenuNextPrevSort;
+import pn.configuration.Constants;
 import pn.pages.ProductsListPage;
 
 public class FunctionMenuHelper {
 	
-	public static final int SORTED_BY_MAX = -1;
-	public static final int SORTED_BY_MIN = 1;
-	public static final int SORTED_BY_MIN_MAX = 2;
-	public static final int NO_SORTED = 0;
-	public static final String SHOW_ALL_LINK = "показать все";
-	public static final String HIDE_OTHER_LINK = "скрыть остальные";
+
 	
 	private static ProductsListPage mainPage;
 	protected static boolean flag;
@@ -33,8 +30,8 @@ public class FunctionMenuHelper {
 		log("Reading of all list of vendors ");
 		Set<String> set = new HashSet<String>();
 		for (WebElement item : mainPage.getFunctionalPanel().getProducersList()) {
-			if (!item.getText().equals(SHOW_ALL_LINK)
-					&& !item.getText().equals(HIDE_OTHER_LINK))
+			if (!item.getText().equals(Constants.SHOW_ALL_LINK)
+					&& !item.getText().equals(Constants.HIDE_OTHER_LINK))
 				set.add(item.getText().toLowerCase());
 			else
 				break;
@@ -96,14 +93,14 @@ public class FunctionMenuHelper {
 		minPrice += (int)min;
 		maxPrice += (int)max;
 		switch (correct) {
-		case SORTED_BY_MIN_MAX:
+		case Constants.SORTED_BY_MIN_MAX:
 			mainPage.getFunctionalPanel().clickToMinLink(minPrice);
 			mainPage.getFunctionalPanel().clickToMaxLink(maxPrice);
 			break;
-		case SORTED_BY_MIN:
+		case Constants.SORTED_BY_MIN:
 			mainPage.getFunctionalPanel().clickToMinLink(minPrice);
 			break;
-		case SORTED_BY_MAX:
+		case Constants.SORTED_BY_MAX:
 			mainPage.getFunctionalPanel().clickToMaxLink(maxPrice);
 			break;
 		}

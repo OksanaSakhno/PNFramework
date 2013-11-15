@@ -23,10 +23,10 @@ public class ProductsListPage extends Component{
 	
 
 	public ProductsListPage() {
-		this.productList = ProductsCatalog.getProductsList();
-		this.menu = MenuNextPrevSort.getMenuComp();
-		this.functionalPanel = FunctionMenu.getFunctionMenuPanel();
-		this.compareComp = CompareComponent.getCompareComponent();
+		productList = ProductsCatalog.getProductsList();
+		menu = MenuNextPrevSort.getMenuComp();
+		functionalPanel = FunctionMenu.getFunctionMenuPanel();
+		compareComp = CompareComponent.getCompareComponent();
 		listOfGoods = productList.getItemsOfProductCatalog();
 	}
 	
@@ -59,6 +59,7 @@ public class ProductsListPage extends Component{
 	public void clickByFilter(String filter) {
 		Component.getDriver().findElement(By.linkText(filter)).click();
 	}
-	
 
+
+	
 }

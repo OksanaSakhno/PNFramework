@@ -9,6 +9,8 @@ import java.util.Set;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.SkipException;
+
 import static pn.helpers.BaseTestHelper.*;
 import pn.components.CompareComponent;
 import pn.components.Component;
@@ -23,12 +25,12 @@ public class CompareComponentHelper {
 	public static Map<String, String> map2 = new HashMap<String, String>();
 	static boolean flag;
 
-	
-	public static void setCompareComponentHelper(ProductsListPage page){
+	public static void setCompareComponentHelper(ProductsListPage page) {
 		CompareComponentHelper.page = ProductsListPage.getProductListPage();
 	}
-	
-	public static Map<String, String> getInfoAboutProduct(ProductDescription prodDescriptComp) {
+
+	public static Map<String, String> getInfoAboutProduct(
+			ProductDescription prodDescriptComp) {
 		String key = null;
 		String value = null;
 		Map<String, String> mapInfo = new HashMap<>();
@@ -44,21 +46,21 @@ public class CompareComponentHelper {
 		}
 		return mapInfo;
 	}
-	
-	
-	public static ProductsListPage openDescriptionProducts(double first, double second){
-		if(isCorrectGoods(first, second)){
-		prodDescriptComp = page.getProductList().openDescriptByProductWithCompare(first);
-		map1 = cowertInfoAboutProductToMap();
-		page.getProductList().openDescriptByProductWithCompare(second);
-		map2 = cowertInfoAboutProductToMap();
-		return PageFactory.initElements(Component.getDriver(), ProductsListPage.class);
-		}else
-			Assert.fail("Invalid input data!");
-		return null;
+
+	public static ProductsListPage openDescriptionProducts(double first,
+			double second) {
+		if (isCorrectGoods(first, second)) {
+			prodDescriptComp = page.getProductList()
+					.openDescriptByProductWithCompare(first);
+			map1 = cowertInfoAboutProductToMap();
+			page.getProductList().openDescriptByProductWithCompare(second);
+			map2 = cowertInfoAboutProductToMap();
+			return PageFactory.initElements(Component.getDriver(),
+					ProductsListPage.class);
+		} else
+			throw new SkipException("Test skipped! Invalid input data!");
 	}
-	
-	
+
 	public static boolean isCorrectGoods(double first, double second) {
 		boolean flag = true;
 		if (first == -1 || second == -1) {
@@ -77,48 +79,53 @@ public class CompareComponentHelper {
 		}
 		return flag;
 	}
-	
-	public static Map<String, String> cowertInfoAboutProductToMap(){
+
+	public static Map<String, String> cowertInfoAboutProductToMap() {
 		Map<String, String> map = new HashMap<String, String>();
 		map = getInfoAboutProduct(prodDescriptComp);
 		Component.getDriver().navigate().back();
 		try {Thread.sleep(2500);} catch (InterruptedException e) {}
 		return map;
-		
+
 	}
-	
-	public static CompareComponent checkDescriptionOfProducts(){
-		Set <String> differentKey = new HashSet<String>();
+
+	public static CompareComponent checkDescriptionOfProducts() {
+		Set<String> differentKey = new HashSet<String>();
 		compareTwoProducts(map1, map2);
 		differentKey = compareFeatures(map1, map2);
 		checkDifferentKey(differentKey);
-		return PageFactory.initElements(Component.getDriver(), CompareComponent.class);
+		return PageFactory.initElements(Component.getDriver(),
+				CompareComponent.class);
 	}
-	
-	
-	
-	public static boolean compareTwoProducts(Map<String, String > map1, Map<String, String > map2){
+
+	public static boolean compareTwoProducts(Map<String, String> map1,
+			Map<String, String> map2) {
 		flag = true;
 		Map<String, Integer> mapFull = new HashMap<>();
-		for(WebElement keyRows : page.getCompareComp().getKeyRow()){
+		for (WebElement keyRows : page.getCompareComp().getKeyRow()) {
 			mapFull.put(keyRows.getText(), 0);
 		}
 		flag = compareMaps(mapFull, map1);
-		Assert.assertTrue("Not all information on the first goods is present at the comparing table", flag);
+		Assert.assertTrue(
+				"Not all information on the first goods is present at the comparing table",
+				flag);
 		flag = compareMaps(mapFull, map2);
-		Assert.assertTrue("Not all information on the second goods is present at the comparing table", flag);	
+		Assert.assertTrue(
+				"Not all information on the second goods is present at the comparing table",
+				flag);
 		return flag;
 	}
-	
-	public static boolean compareMaps(Map<String, Integer > mapFull, Map<String, String > map){
+
+	public static boolean compareMaps(Map<String, Integer> mapFull,
+			Map<String, String> map) {
 		for (Entry<String, String> entry : map.entrySet()) {
-			if(!mapFull.containsKey(entry.getKey())){
+			if (!mapFull.containsKey(entry.getKey())) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
+
 	public static Set<String> compareFeatures(Map<String, String> map1,
 			Map<String, String> map2) {
 		flag = true;
@@ -130,36 +137,37 @@ public class CompareComponentHelper {
 						set.add(firstKey);
 					}
 				}
-				if (!map1.containsKey(secondKey)){
+				if (!map1.containsKey(secondKey)) {
 					set.add(secondKey);
 				}
-				if (!map2.containsKey(firstKey)){
+				if (!map2.containsKey(firstKey)) {
 					set.add(firstKey);
 				}
 			}
 		}
 		return set;
 	}
-	
-	public static void checkDifferentKey(Set<String> output){
+
+	public static void checkDifferentKey(Set<String> output) {
 		flag = true;
-		for(WebElement key : page.getCompareComp().getDifferentValueRow()){
-			if(!output.contains(key.getText())){
-				System.out.println(key.getText());
+		for (WebElement key : page.getCompareComp().getDifferentValueRow()) {
+			if (!output.contains(key.getText())) {
+				log("Different field " + key.getText());
 				flag = false;
 			}
 		}
-		if(page.getCompareComp().getDifferentValueRow().size() != output.size())
+		if (page.getCompareComp().getDifferentValueRow().size() != output
+				.size())
 			flag = false;
-		Assert.assertTrue("Distinctive characteristics of goods are identified incorrectly!", flag);
+		Assert.assertTrue(
+				"Distinctive characteristics of goods are identified incorrectly!",
+				flag);
 	}
-	
-	
-	public static CompareComponent openComparePage(){
+
+	public static CompareComponent openComparePage() {
 		page.getProductList().openCompare();
-		return PageFactory.initElements(Component.getDriver(), CompareComponent.class);
-	}
-	
+		return PageFactory.initElements(Component.getDriver(),
+				CompareComponent.class);
 	}
 
-
+}

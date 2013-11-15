@@ -1,5 +1,6 @@
 package pn.tests;
 
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 import pn.components.ListOfCategories;
@@ -27,7 +28,7 @@ public class SortedProductsTest extends BaseTest {
 			ProductsListHelper.checkSortedListByPrice();
 			
 		} catch (NullPointerException e) {
-			log("<b><h3>" + "Some element is NOT FOUND!Maybe you have entered INCORRECT DATA!" + "</h3></b>");
+			throw new SkipException("Test skipped! Some element is NOT FOUND!Maybe you have entered INCORRECT DATA!");
 		}
 
 	}
@@ -48,7 +49,7 @@ public class SortedProductsTest extends BaseTest {
 			ProductsListHelper.checkSortedListByName();
 			
 		} catch (NullPointerException e) {
-			log("<b><h3>" + "Some element is NOT FOUND!Maybe you have entered INCORRECT DATA!" + "</h3></b>");
+			throw new SkipException("Test skipped! Some element is NOT FOUND!Maybe you have entered INCORRECT DATA!");
 		}
 
 	}

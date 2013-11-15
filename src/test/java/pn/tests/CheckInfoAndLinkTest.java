@@ -1,5 +1,6 @@
 package pn.tests;
 
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 import pn.components.ListOfCategories;
@@ -30,7 +31,7 @@ public class CheckInfoAndLinkTest extends BaseTest {
 			PricePageHelper.checkSameLink();
 			
 		} catch (NullPointerException e) {
-			log("<b><h3>" + "Some element is NOT FOUND!Maybe you have entered INCORRECT DATA!" + "</h3></b>");
+			throw new SkipException("Some element is NOT FOUND!Maybe you have entered INCORRECT DATA!");
 		}
 	}
 
@@ -50,7 +51,7 @@ public class CheckInfoAndLinkTest extends BaseTest {
 			ProductsListHelper.openProductsAndCheckDescription(countGoods);
 			
 		} catch (NullPointerException e) {
-			log("<b><h3>" + "Some element is NOT FOUND!Maybe you have entered INCORRECT DATA!" + "</h3></b>");
+			throw new SkipException("Some element is NOT FOUND!Maybe you have entered INCORRECT DATA!");
 		}
 
 	}

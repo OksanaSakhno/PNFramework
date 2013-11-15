@@ -6,16 +6,17 @@ import java.util.List;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.SkipException;
 
 import static pn.helpers.BaseTestHelper.*;
 import pn.components.Component;
 import pn.components.MenuNextPrevSort;
 import pn.components.ProductDescription;
+import pn.configuration.Constants;
 import pn.pages.ProductsListPage;
 
 public class ProductsListHelper {
 
-	public static final int PARAMETR_NOT_SET = -1;
 	private static boolean flag;
 	private static ProductsListPage pageHelper;
 
@@ -37,9 +38,8 @@ public class ProductsListHelper {
 					ProductsListPage.class);
 		} else{
 			log("<b><h3>" + filter + " Such filter is not found!" + "</h3></b>");
-			Assert.fail("Filter not found!");
+			throw new SkipException("Test skipped! Filter not found!"); 
 		}
-		return null;
 	}
 
 	public static void checkSortedListByPrice() {
@@ -111,13 +111,14 @@ public class ProductsListHelper {
 	// ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static ProductsListPage sortProductsByMinMax(double min, double max) {
 		int isCorrect = ProductsListHelper.isCorrectPrice(min, max);
-		if (isCorrect != FunctionMenuHelper.NO_SORTED) {
+		if (isCorrect != Constants.NO_SORTED) {
 			FunctionMenuHelper.setFunctionMenuHelper(pageHelper);
 			FunctionMenuHelper.goToListProductsSortedByMinMax(min, max,
 					isCorrect);
 			sortedByMinMax(min, max, isCorrect);
 		} else
-			Assert.fail("Parameters for sorting are specified incorrectly!");
+			throw new SkipException("Test skipped! Parameters for sorting are specified incorrectly!"); 
+
 		return PageFactory.initElements(Component.getDriver(),
 				ProductsListPage.class);
 	}
@@ -130,25 +131,25 @@ public class ProductsListHelper {
 	public static int isCorrectPrice(double min, double max) {
 		log("Checking of input MIN MAX parameters ");
 
-		if (min == PARAMETR_NOT_SET) {
+		if (min == Constants.PARAMETR_NOT_SET) {
 			log("Specify only one parameter to check the price (MAX) ");
-			return FunctionMenuHelper.SORTED_BY_MAX;
+			return Constants.SORTED_BY_MAX;
 		}
-		if (max == PARAMETR_NOT_SET) {
+		if (max == Constants.PARAMETR_NOT_SET) {
 			log("Specify only one parameter to check the price (MIN) ");
-			return FunctionMenuHelper.SORTED_BY_MIN;
+			return Constants.SORTED_BY_MIN;
 		} else {
 			if (max < min) {
 				log("<b><h3>" + "The prices are incorrectly specified! Minimum price must be less maximum." + "<h3></b>");
-				return FunctionMenuHelper.NO_SORTED;
+				return Constants.NO_SORTED;
 			}
 			if (max == min) {
 				log("The prices are incorrectly specified! As, minimum is equal to maximum price, sorting will be made at minimum price. "
 						+ "Sorting at the MIN price!");
-				return FunctionMenuHelper.SORTED_BY_MIN;
+				return Constants.SORTED_BY_MIN;
 			}
 		}
-		return FunctionMenuHelper.SORTED_BY_MIN_MAX;
+		return Constants.SORTED_BY_MIN_MAX;
 	}
 
 	public static boolean sortedByMinMax(double min, double max, int correct) {
@@ -157,7 +158,7 @@ public class ProductsListHelper {
 		setFlag(true);
 		while (true) {
 			for (WebElement item : pageHelper.listOfGoods) {
-				if (correct == FunctionMenuHelper.SORTED_BY_MIN_MAX) {
+				if (correct == Constants.SORTED_BY_MIN_MAX) {
 					if (ProductHelper.convertRowToProduct(item).getPrice() < (int) min
 							|| ProductHelper.convertRowToProduct(item).getPrice() > (int) max) {
 						log("This element "
@@ -165,14 +166,14 @@ public class ProductsListHelper {
 								+ " is not included in the preset range of values!");
 						flag = false;
 					}
-				} else if (correct == FunctionMenuHelper.SORTED_BY_MAX) {
+				} else if (correct == Constants.SORTED_BY_MAX) {
 					if (ProductHelper.convertRowToProduct(item).getPrice() > (int) max) {
 						log("This element "
 								+ ProductHelper.convertRowToProduct(item).toString()
 								+ " is more than maximum!");
 						setFlag(false);
 					}
-				} else if (correct == FunctionMenuHelper.SORTED_BY_MIN) {
+				} else if (correct == Constants.SORTED_BY_MIN) {
 					if (ProductHelper.convertRowToProduct(item).getPrice() < (int) min) {
 						log("This element "
 								+ ProductHelper.convertRowToProduct(item).toString()
@@ -209,7 +210,7 @@ public class ProductsListHelper {
 			name[index - 1] = pageHelper.getProductList().getProductsName()
 					.get(index - 1).getText().replaceAll(" / ", "/");
 			href[index - 1] = pageHelper.getProductList().getProductsName()
-					.get(index - 1).getAttribute(PricePageHelper.ATTRIBURE_HREF);
+					.get(index - 1).getAttribute(Constants.ATTRIBURE_HREF);
 		}
 		return PageFactory.initElements(Component.getDriver(),
 				ProductsListPage.class);
@@ -233,13 +234,13 @@ public class ProductsListHelper {
 			Assert.assertTrue("Full and summary description not the identical", checkFullDescriptionAndSummary(listDescription, description));
 			Component.getDriver().navigate().back();
 		}
-		}else Assert.fail("Invalid input data!");
+		}else throw new SkipException("Test skipped!"); 
 
 	}
 	
 	public static boolean isCorrectCount(double count) {
 		boolean flag = true;
-		if (count == -1 ) {
+		if (count == Constants.PARAMETR_NOT_SET ) {
 			log("<b><h3>"
 					+ "The amount of goods for check isn't entered!"
 					+ "</h3></b>");

@@ -4,39 +4,53 @@ package pn.helpers;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Reporter;
+
+import pn.configuration.Constants;
 import pn.configuration.WebDriverFactory;
 import pn.dataProvider.PropertiesFileReader;
 import pn.tests.BaseTest;
 
 public class BaseTestHelper {
 	
-	public WebDriver selectBrowser(String nameDriver, PropertiesFileReader propertyReader) {
+
+	public WebDriver selectBrowser(String nameDriver,
+			PropertiesFileReader propertyReader) {
 		propertyReader.readPropertiesFile(BaseTest.nameFileProperties);
 		log("Select " + nameDriver + " browser");
+
 		switch (nameDriver) {
-		case "firefox":
+
+		case Constants.DEFAULT_FIREFOX_BROWSER:
 			return WebDriverFactory.getDriver(DesiredCapabilities.firefox());
-		case "chrome": {
-			System.setProperty("webdriver.chrome.driver", propertyReader.getDriverDirChrome());
+
+		case Constants.CHROME_BROWSER:
+			System.setProperty(Constants.CHROME_DRIVER_NAME,
+					propertyReader.getDriverDirChrome());
 			return WebDriverFactory.getDriver(DesiredCapabilities.chrome());
-		}
-		case "IE": {
-			System.setProperty("webdriver.ie.driver", propertyReader.getDriverDirIE());
+
+		case Constants.IE_BROWSER:
+			System.setProperty(Constants.IE_DRIVER_NAME, propertyReader.getDriverDirIE());
 			return WebDriverFactory.getDriver(DesiredCapabilities
-					.internetExplorer());
-		}
-		case "opera": {
-			System.setProperty("opera.binary", propertyReader.getDriverDirOpera());
+					.internetExplorer()); 
+
+		case Constants.OPERA_BROWSER:
+			System.setProperty(Constants.OPERA_DRIVER_NAME,
+					propertyReader.getDriverDirOpera());
 			return WebDriverFactory.getDriver(DesiredCapabilities.opera());
+		default:
+			return getDefaultBrowser();
 		}
-		}
-		return WebDriverFactory.getDriver(DesiredCapabilities.firefox());
 	}
 	
 	
+	private WebDriver getDefaultBrowser() {
+		log("Select default browser ");
+		return WebDriverFactory.getDriver(DesiredCapabilities.firefox());
+	}
+
+
 	public static void log(String message) {
 		Reporter.log("[LOG]" + " " + message + "<br>");
 	}
-	
 	
 }

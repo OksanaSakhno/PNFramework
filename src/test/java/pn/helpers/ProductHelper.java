@@ -2,7 +2,9 @@ package pn.helpers;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+
 import pn.components.ProductsCatalog;
+import pn.configuration.Constants;
 import pn.pages.Product;
 import pn.pages.ProductsListPage;
 
@@ -24,7 +26,7 @@ public class ProductHelper {
 				.getText();
 		href = item.findElement(
 				By.cssSelector(ProductsCatalog.HREF_OF_PRODUCTS)).getAttribute(
-						PricePageHelper.ATTRIBURE_HREF);
+						Constants.ATTRIBURE_HREF);
 		return new Product().withName(name)
 				.withPrice(parceStringToInt(price))
 				.wihtDescription(description).wihtHref(href);

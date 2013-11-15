@@ -105,13 +105,13 @@ public class WebDriverFactory {
 
   private static WebDriver createLocalDriver(Capabilities capabilities) {
     String browserType = capabilities.getBrowserName();
-    if (browserType.equals("firefox"))
+    if (browserType.equals(Constants.DEFAULT_FIREFOX_BROWSER))
       return new FirefoxDriver(capabilities);
-    if (browserType.startsWith("internet explorer"))
+    if (browserType.startsWith(Constants.IE_BROWSER))
       return new InternetExplorerDriver(capabilities);
-    if (browserType.equals("chrome"))
+    if (browserType.equals(Constants.CHROME_BROWSER))
       return new ChromeDriver(capabilities);
-    if (browserType.equals("opera"))
+    if (browserType.equals(Constants.OPERA_BROWSER))
       return new OperaDriver(capabilities);
     throw new Error("Unrecognized browser type: " + browserType);
   }

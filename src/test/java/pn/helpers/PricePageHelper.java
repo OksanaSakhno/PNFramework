@@ -3,15 +3,17 @@ package pn.helpers;
 
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
+
 import static pn.helpers.BaseTestHelper.*;
 import pn.components.PricePage;
+import pn.configuration.Constants;
 import pn.pages.ProductsListPage;
 
 
 public class PricePageHelper {
 	
 	private static ProductsListPage page;
-	public static final String ATTRIBURE_HREF = "href";
+
 	
 	public static void setPricePageHelper(ProductsListPage productPage){
 		page = productPage;
@@ -21,9 +23,9 @@ public class PricePageHelper {
 		boolean flag = true;
 		log("Cheking elements by href on the Price page ");
 		for (WebElement item : pricePage.getDescriptionLink()) {
-			if (!item.getAttribute(ATTRIBURE_HREF).equals(ProductsListHelper.href[index])) {
+			if (!item.getAttribute(Constants.ATTRIBURE_HREF).equals(ProductsListHelper.href[index])) {
 				log("This href refers to the description of other product "
-						+ item.getAttribute(ATTRIBURE_HREF));
+						+ item.getAttribute(Constants.ATTRIBURE_HREF));
 				flag = false;
 			}
 			Assert.assertTrue("Not all goods refer to the description of one goods!", flag);

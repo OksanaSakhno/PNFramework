@@ -3,6 +3,7 @@ package pn.components;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import static pn.helpers.BaseTestHelper.*;
 
 
 public class Header extends Component{
@@ -44,6 +45,7 @@ public class Header extends Component{
 
 		
 	public void clickLogo(){
+		log("Click on the Logo image");
 		getMainLogo().click();
 	}
 	
