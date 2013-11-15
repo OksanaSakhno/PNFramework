@@ -1,8 +1,7 @@
 package pn.tests;
 
-import org.testng.SkipException;
-import org.testng.annotations.Test;
 
+import org.testng.annotations.Test;
 import pn.components.ListOfCategories;
 import pn.dataProvider.DataProviderTest;
 import pn.helpers.CompareComponentHelper;
@@ -13,7 +12,6 @@ public class CompareProducts extends BaseTest {
 	@Test(dataProvider = "readForTest", dataProviderClass = DataProviderTest.class)
 	public void checkCompareTest(String section, String category,
 			double firstGood, double secondGood) {
-		try {
 			
 			ListOfCategories listOfCategoryPage = goToMailPage();
 			ListOfCategoriesHelper
@@ -27,10 +25,6 @@ public class CompareProducts extends BaseTest {
 					secondGood);
 			CompareComponentHelper.openComparePage();
 			CompareComponentHelper.checkDescriptionOfProducts();
-			
-		} catch (NullPointerException e) {
-			throw new SkipException("Some element is NOT FOUND!Maybe you have entered INCORRECT DATA!");
-		}
 
 	}
 

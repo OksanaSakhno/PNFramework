@@ -12,7 +12,7 @@ public class CheckVendorsOfGoods extends BaseTest{
 	
 	@Test(dataProvider = "readForTest", dataProviderClass = DataProviderTest.class)
 	public void checkVendorsTest(String section, String category) {
-		try {
+
 			ListOfCategories listOfCategoryPage = goToMailPage();
 			ListOfCategoriesHelper
 					.setListOfCategoriesHelper(listOfCategoryPage);
@@ -23,9 +23,6 @@ public class CheckVendorsOfGoods extends BaseTest{
 			FunctionMenuHelper.setFunctionMenuHelper(productListPage);
 			FunctionMenuHelper.getNameVendorsOfGoods();
 			FunctionMenuHelper.checkListByVendorsName();
-		} catch (NullPointerException e) {
-			log("<b><h3>" + "Some element is NOT FOUND!Maybe you have entered INCORRECT DATA!" + "</h3></b>");
-		}
 		
 	}
 	

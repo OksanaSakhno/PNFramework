@@ -1,8 +1,7 @@
 package pn.tests;
 
-import org.testng.SkipException;
-import org.testng.annotations.Test;
 
+import org.testng.annotations.Test;
 import pn.components.ListOfCategories;
 import pn.dataProvider.DataProviderTest;
 import pn.helpers.ListOfCategoriesHelper;
@@ -14,7 +13,6 @@ public class SortedProductsTest extends BaseTest {
 	@Test(dataProvider = "readForTest", dataProviderClass = DataProviderTest.class)
 	public void filterByPriceTest(String section, String category, String filter) {
 
-		try {
 
 			ListOfCategories listOfCategoryPage = goToMailPage();
 			ListOfCategoriesHelper
@@ -27,16 +25,12 @@ public class SortedProductsTest extends BaseTest {
 			ProductsListHelper.sortProductsByFilter(filter);
 			ProductsListHelper.checkSortedListByPrice();
 			
-		} catch (NullPointerException e) {
-			throw new SkipException("Test skipped! Some element is NOT FOUND!Maybe you have entered INCORRECT DATA!");
-		}
-
 	}
 
 	@Test(dataProvider = "readForTest", dataProviderClass = DataProviderTest.class)
 	public void filterByNameTest(String section, String category, String filter) {
 
-		try {
+
 			ListOfCategories listOfCategoryPage = goToMailPage();
 			ListOfCategoriesHelper
 					.setListOfCategoriesHelper(listOfCategoryPage);
@@ -48,9 +42,6 @@ public class SortedProductsTest extends BaseTest {
 			ProductsListHelper.sortProductsByFilter(filter);
 			ProductsListHelper.checkSortedListByName();
 			
-		} catch (NullPointerException e) {
-			throw new SkipException("Test skipped! Some element is NOT FOUND!Maybe you have entered INCORRECT DATA!");
-		}
 
 	}
 

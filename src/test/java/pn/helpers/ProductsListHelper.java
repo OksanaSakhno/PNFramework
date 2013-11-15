@@ -1,6 +1,5 @@
 package pn.helpers;
 
-
 import java.util.List;
 
 import org.junit.Assert;
@@ -36,20 +35,22 @@ public class ProductsListHelper {
 			pageHelper.clickByFilter(filter);
 			return PageFactory.initElements(Component.getDriver(),
 					ProductsListPage.class);
-		} else{
+		} else {
 			log("<b><h3>" + filter + " Such filter is not found!" + "</h3></b>");
-			throw new SkipException("Test skipped! Filter not found!"); 
+			throw new SkipException("Test skipped! Filter not found!");
 		}
 	}
 
 	public static void checkSortedListByPrice() {
 		log("Check sorting of all the products at the price ");
-		Assert.assertTrue("Not all goods are sorted by the price", getItemsOfCatalogByPrice());
+		Assert.assertTrue("Not all goods are sorted by the price",
+				getItemsOfCatalogByPrice());
 	}
 
 	public static void checkSortedListByName() {
 		log("Check sorting of all the products at the name ");
-		Assert.assertTrue("Not all goods are sorted by the name", getItemsOfCatalogName());
+		Assert.assertTrue("Not all goods are sorted by the name",
+				getItemsOfCatalogName());
 	}
 
 	public static boolean getItemsOfCatalogName() {
@@ -60,14 +61,16 @@ public class ProductsListHelper {
 				if (name == null) {
 					name = ProductHelper.convertRowToProduct(item).getName();
 				} else {
-					if (name.compareTo(ProductHelper.convertRowToProduct(item).getName()) == 1) {
+					if (name.compareTo(ProductHelper.convertRowToProduct(item)
+							.getName()) == 1) {
 						log("This element "
-								+ ProductHelper.convertRowToProduct(item).toString()
-								+ " isn't sorted!");
+								+ ProductHelper.convertRowToProduct(item)
+										.toString() + " isn't sorted!");
 						setFlag(false);
 						Assert.fail("Not all goods are sorted by the name");
 					} else {
-						name = ProductHelper.convertRowToProduct(item).getName();
+						name = ProductHelper.convertRowToProduct(item)
+								.getName();
 					}
 				}
 
@@ -88,12 +91,14 @@ public class ProductsListHelper {
 				if (price == 0) {
 					price = ProductHelper.convertRowToProduct(item).getPrice();
 				} else {
-					if (price <= ProductHelper.convertRowToProduct(item).getPrice()) {
-						price = ProductHelper.convertRowToProduct(item).getPrice();
+					if (price <= ProductHelper.convertRowToProduct(item)
+							.getPrice()) {
+						price = ProductHelper.convertRowToProduct(item)
+								.getPrice();
 					} else {
 						log("This element "
-								+ ProductHelper.convertRowToProduct(item).toString()
-								+ " isn't sorted!");
+								+ ProductHelper.convertRowToProduct(item)
+										.toString() + " isn't sorted!");
 						setFlag(false);
 						Assert.fail("Not all goods are sorted by the price");
 					}
@@ -117,7 +122,8 @@ public class ProductsListHelper {
 					isCorrect);
 			sortedByMinMax(min, max, isCorrect);
 		} else
-			throw new SkipException("Test skipped! Parameters for sorting are specified incorrectly!"); 
+			throw new SkipException(
+					"Test skipped! Parameters for sorting are specified incorrectly!");
 
 		return PageFactory.initElements(Component.getDriver(),
 				ProductsListPage.class);
@@ -125,7 +131,9 @@ public class ProductsListHelper {
 
 	public static void checkSortedListOfProductsByMinMax() {
 
-		Assert.assertTrue("Not all goods are sorted by the filter of a minimum and maximum price.", getFlag());
+		Assert.assertTrue(
+				"Not all goods are sorted by the filter of a minimum and maximum price.",
+				getFlag());
 	}
 
 	public static int isCorrectPrice(double min, double max) {
@@ -140,7 +148,9 @@ public class ProductsListHelper {
 			return Constants.SORTED_BY_MIN;
 		} else {
 			if (max < min) {
-				log("<b><h3>" + "The prices are incorrectly specified! Minimum price must be less maximum." + "<h3></b>");
+				log("<b><h3>"
+						+ "The prices are incorrectly specified! Minimum price must be less maximum."
+						+ "<h3></b>");
 				return Constants.NO_SORTED;
 			}
 			if (max == min) {
@@ -160,24 +170,26 @@ public class ProductsListHelper {
 			for (WebElement item : pageHelper.listOfGoods) {
 				if (correct == Constants.SORTED_BY_MIN_MAX) {
 					if (ProductHelper.convertRowToProduct(item).getPrice() < (int) min
-							|| ProductHelper.convertRowToProduct(item).getPrice() > (int) max) {
+							|| ProductHelper.convertRowToProduct(item)
+									.getPrice() > (int) max) {
 						log("This element "
-								+ ProductHelper.convertRowToProduct(item).toString()
+								+ ProductHelper.convertRowToProduct(item)
+										.toString()
 								+ " is not included in the preset range of values!");
 						flag = false;
 					}
 				} else if (correct == Constants.SORTED_BY_MAX) {
 					if (ProductHelper.convertRowToProduct(item).getPrice() > (int) max) {
 						log("This element "
-								+ ProductHelper.convertRowToProduct(item).toString()
-								+ " is more than maximum!");
+								+ ProductHelper.convertRowToProduct(item)
+										.toString() + " is more than maximum!");
 						setFlag(false);
 					}
 				} else if (correct == Constants.SORTED_BY_MIN) {
 					if (ProductHelper.convertRowToProduct(item).getPrice() < (int) min) {
 						log("This element "
-								+ ProductHelper.convertRowToProduct(item).toString()
-								+ " is less than minimum!");
+								+ ProductHelper.convertRowToProduct(item)
+										.toString() + " is less than minimum!");
 						setFlag(false);
 					}
 				}
@@ -200,55 +212,65 @@ public class ProductsListHelper {
 			return true;
 		}
 	}
+
 	// ////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public static ProductsListPage saveLinksAndNameGoods(double count) {
-		log("Saving of href and names of goods");
-		name = new String[(int) count];
-		href = new String[(int) count];
-		for (int index = 1; index <= (int) count; index++) {
-			name[index - 1] = pageHelper.getProductList().getProductsName()
-					.get(index - 1).getText().replaceAll(" / ", "/");
-			href[index - 1] = pageHelper.getProductList().getProductsName()
-					.get(index - 1).getAttribute(Constants.ATTRIBURE_HREF);
-		}
-		return PageFactory.initElements(Component.getDriver(),
-				ProductsListPage.class);
+
+		if (isCorrectCount(count)) {
+			log("Saving of href and names of goods");
+			name = new String[(int) count];
+			href = new String[(int) count];
+			for (int index = 1; index <= (int) count; index++) {
+				name[index - 1] = pageHelper.getProductList().getProductsName()
+						.get(index - 1).getText().replaceAll(" / ", "/");
+				href[index - 1] = pageHelper.getProductList().getProductsName()
+						.get(index - 1).getAttribute(Constants.ATTRIBURE_HREF);
+			}
+			return PageFactory.initElements(Component.getDriver(),
+					ProductsListPage.class);
+		} else
+			throw new SkipException("Test skipped!");
 	}
+	
 
 	public static void openProductsAndCheckDescription(double count) {
 		ProductDescription descriptionPage;
 		List<String> listDescription;
-		if(isCorrectCount(count)){
-		log("Opening full description of goods");
-		for (int index = 1; index <= count; index++) {
-			String[] description;
-			description = pageHelper.getProductList().getProductsDescription()
-					.get(index - 1).getText().split(";");
-			descriptionPage = pageHelper.getProductList()
-					.openDescriptionProduct(index - 1);
-			ProductDescriptionHelper
-					.setProductDescriptionHelper(descriptionPage);
-			listDescription = ProductDescriptionHelper.getInfoByProductToList();
+		if (isCorrectCount(count)) {
+			log("Opening full description of goods");
+			for (int index = 1; index <= count; index++) {
+				String[] description;
+				description = pageHelper.getProductList()
+						.getProductsDescription().get(index - 1).getText()
+						.split(";");
+				descriptionPage = pageHelper.getProductList()
+						.openDescriptionProduct(index - 1);
+				ProductDescriptionHelper
+						.setProductDescriptionHelper(descriptionPage);
+				listDescription = ProductDescriptionHelper
+						.getInfoByProductToList();
 
-			Assert.assertTrue("Full and summary description not the identical", checkFullDescriptionAndSummary(listDescription, description));
-			Component.getDriver().navigate().back();
-		}
-		}else throw new SkipException("Test skipped!"); 
-
+				Assert.assertTrue(
+						"Full and summary description not the identical",
+						checkFullDescriptionAndSummary(listDescription,
+								description));
+				Component.getDriver().navigate().back();
+			}
+		} else
+			throw new SkipException("Test skipped!");
 	}
-	
+
 	public static boolean isCorrectCount(double count) {
 		boolean flag = true;
-		if (count == Constants.PARAMETR_NOT_SET ) {
-			log("<b><h3>"
-					+ "The amount of goods for check isn't entered!"
+		if (count == Constants.PARAMETR_NOT_SET) {
+			log("<b><h3>" + "The amount of goods for check isn't entered!"
 					+ "</h3></b>");
 			flag = false;
-		} else if (count <= 0 ) {
+		} else if (count <= 0) {
 			log("<b><h3>" + "Incorrect numbers of goods!" + "</h3></b>");
 			flag = false;
-		} else if (count > 20 ) {
+		} else if (count > 20) {
 			log("<b><h3>"
 					+ "You can check the goods on the first page!Goods on page at most 20."
 					+ "</h3></b>");
@@ -257,15 +279,16 @@ public class ProductsListHelper {
 		return flag;
 	}
 
-	public static boolean checkFullDescriptionAndSummary(
-			List<String> list, String[] description) {
+	public static boolean checkFullDescriptionAndSummary(List<String> list,
+			String[] description) {
 		int count = 0;
 		int countDescript = description.length - 1;
 
 		log("Cheking full and summary description ");
 		for (int index = 1; index < description.length; index++) {
-			for(String row : list){
-				if (row.indexOf(description[index].trim().replaceAll(":", "").toLowerCase()) != -1)
+			for (String row : list) {
+				if (row.indexOf(description[index].trim().replaceAll(":", "")
+						.toLowerCase()) != -1)
 					count++;
 			}
 		}
@@ -273,7 +296,6 @@ public class ProductsListHelper {
 			return false;
 		return true;
 	}
-	
 
 	// //////////////////////////////////////////////////
 

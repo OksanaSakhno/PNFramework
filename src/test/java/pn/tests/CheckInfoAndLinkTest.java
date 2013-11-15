@@ -1,8 +1,7 @@
 package pn.tests;
 
-import org.testng.SkipException;
-import org.testng.annotations.Test;
 
+import org.testng.annotations.Test;
 import pn.components.ListOfCategories;
 import pn.dataProvider.DataProviderTest;
 import pn.helpers.ListOfCategoriesHelper;
@@ -15,7 +14,6 @@ public class CheckInfoAndLinkTest extends BaseTest {
 	@Test(dataProvider = "readForTest", dataProviderClass = DataProviderTest.class)
 	public void checkLinkOfProduct(String section, String category,
 			double countGoods) {
-		try {
 
 			ListOfCategories listOfCategoryPage = goToMailPage();
 			ListOfCategoriesHelper
@@ -29,16 +27,12 @@ public class CheckInfoAndLinkTest extends BaseTest {
 
 			PricePageHelper.setPricePageHelper(productListPage);
 			PricePageHelper.checkSameLink();
-			
-		} catch (NullPointerException e) {
-			throw new SkipException("Some element is NOT FOUND!Maybe you have entered INCORRECT DATA!");
-		}
+		
 	}
 
 	@Test(dataProvider = "readForTest", dataProviderClass = DataProviderTest.class)
 	public void checkDescription(String section, String category,
 			double countGoods) {
-		try {
 			
 			ListOfCategories listOfCategoryPage = goToMailPage();
 			ListOfCategoriesHelper
@@ -50,9 +44,5 @@ public class CheckInfoAndLinkTest extends BaseTest {
 			ProductsListHelper.setProductsListHelper(productListPage);
 			ProductsListHelper.openProductsAndCheckDescription(countGoods);
 			
-		} catch (NullPointerException e) {
-			throw new SkipException("Some element is NOT FOUND!Maybe you have entered INCORRECT DATA!");
-		}
-
 	}
 }

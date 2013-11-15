@@ -13,7 +13,6 @@ public class FuncAndDecriptTest extends BaseTest {
 	@Test(dataProvider = "readForTest", dataProviderClass = DataProviderTest.class)
 	public void funcAndDecriptTest(String section, String category,
 			String function) {
-		try {
 			
 			ListOfCategories listOfCategoryPage = goToMailPage();
 			ListOfCategoriesHelper
@@ -25,10 +24,7 @@ public class FuncAndDecriptTest extends BaseTest {
 			FunctionMenuHelper.setFunctionMenuHelper(productListPage);
 			FunctionMenuHelper.sortProductsByFunction(function);
 			FunctionMenuHelper.checkSortedListOfProductsByFunction(function);
-
-		} catch (NullPointerException e) {
-			log("<b><h3>" + "Some element is NOT FOUND!Maybe you have entered INCORRECT DATA!" + "</h3></b>");
-		}
+			
 	}
 
 }

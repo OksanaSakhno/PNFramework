@@ -1,13 +1,12 @@
 package pn.components;
 
 import java.util.List;
-
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.SkipException;
 
 import static pn.helpers.BaseTestHelper.*;
 
@@ -32,41 +31,47 @@ public class FunctionMenu extends Component {
 	private List<WebElement> producersHideList;
 
 	public static FunctionMenu getFunctionMenuPanel() {
-		FunctionMenu functionMenu = PageFactory.initElements(Component.getDriver(),
-				FunctionMenu.class);
+		FunctionMenu functionMenu = PageFactory.initElements(
+				Component.getDriver(), FunctionMenu.class);
 		return functionMenu;
 	}
 
-	
-
 	public void clickToMinLink(String min) {
 		try {
+			log("Click on the min price element");
 			getMinLink().findElement(By.linkText(min)).click();
 		} catch (NoSuchElementException e) {
-			log("<b><h3>" + "For these goods there is no such filter at the price!"  + "</h3></b>");
-			Assert.fail();
+			log("<b><h3>"
+					+ "For these goods there is no such filter at the price!"
+					+ "</h3></b>");
+			throw new SkipException("Incorrect input min max price!");
 		}
 	}
 
 	public void clickToMaxLink(String max) {
 		try {
+			log("Click on the max price element");
 			getMaxLink().findElement(By.linkText(max)).click();
 		} catch (NoSuchElementException e) {
-			log("<b><h3>" + "For these goods there is no such filter at the price!"  + "</h3></b>");
-			Assert.fail();
+			log("<b><h3>"
+					+ "For these goods there is no such filter at the price!"
+					+ "</h3></b>");
+			throw new SkipException("Incorrect input min max price!");
 		}
 	}
 
-	public static void clickToCommonVendorList(String linkName) {
+	public void clickToCommonVendorList(String linkName) {
 		try {
+			log("Click on the all vendors link");
 			Component.getDriver().findElement(By.linkText(linkName)).click();
 		} catch (NoSuchElementException e) {
-			log("<b><h3>" + "The link is not found!"  + "</h3></b>");
-			Assert.fail();
+			log("<b><h3>" + "The link is not found!" + "</h3></b>");
+			throw new SkipException("All products link not found!");
 		}
 	}
-	
-	public static void clickToFunction(String function){
+
+	public void clickToFunction(String function) {
+		log("Click on the some function " + function);
 		Component.getDriver().findElement(By.linkText(function)).click();
 	}
 
@@ -86,5 +91,4 @@ public class FunctionMenu extends Component {
 		return producersHideList;
 	}
 
-	
 }

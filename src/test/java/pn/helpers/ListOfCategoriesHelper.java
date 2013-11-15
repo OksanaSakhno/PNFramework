@@ -2,6 +2,8 @@ package pn.helpers;
 
 
 import org.openqa.selenium.support.PageFactory;
+import org.testng.SkipException;
+
 import static pn.helpers.BaseTestHelper.*;
 import pn.components.Component;
 import pn.components.ListOfCategories;
@@ -26,15 +28,19 @@ public class ListOfCategoriesHelper{
 					ProductsListPage.class);
 		} else {
 			log("Category not found " + category);
-			
+
 			goToSectionProducts(section);
 			if (ProductsListHelper.elementIsExist(category)) {
 				ListOfCategories.gotoCategoryOrSection(category);
 				return PageFactory.initElements(Component.getDriver(),
 						ProductsListPage.class);
+			} else {
+				log("<b><h3>"
+						+ "Some element is NOT FOUND!Maybe you have entered INCORRECT DATA!"
+						+ "</h3></b>");
+				throw new SkipException("INCORRECT DATA!");
 			}
 		}
-		return null;
 	}
 
 	public static ListOfCategories goToSectionProducts(String section) {
@@ -47,8 +53,8 @@ public class ListOfCategoriesHelper{
 					ListOfCategories.class);
 		} else {
 			log("Section not found " + section);
+			throw new SkipException("INCORRECT DATA!");
 		}
-		return null;
 	}
 
 	public static ListOfCategories getListCategories() {

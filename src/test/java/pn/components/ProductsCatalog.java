@@ -1,7 +1,7 @@
 package pn.components;
 
 import java.util.List;
-
+import static pn.helpers.BaseTestHelper.*;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -74,21 +74,22 @@ public class ProductsCatalog extends Component{
 	}
 	
 	public ProductDescription openDescriptByProductWithCompare(double element) {
-		try {Thread.sleep(2000);} catch (InterruptedException e) {}
+		log("Click on compare link.");
 		getAddLinkToCompare().get((int)element-1).click();
-		try {Thread.sleep(2000);} catch (InterruptedException e) {}
+		log("Click on the some goods.");
 		getProductsName().get((int)element-1).click();
 		return PageFactory.initElements(Component.getDriver(), ProductDescription.class);
 	}
 	
-	public ProductDescription openDescriptionProduct(double element){
-		try {Thread.sleep(2000);} catch (InterruptedException e) {}
-		getProductsName().get((int)element).click();
-		return PageFactory.initElements(Component.getDriver(), ProductDescription.class);
+	public ProductDescription openDescriptionProduct(double element) {
+		log("Click on the some goods.");
+		getProductsName().get((int) element).click();
+		return PageFactory.initElements(Component.getDriver(),
+				ProductDescription.class);
 	}
 	
 	public void openCompare(){
-		try {Thread.sleep(2000);} catch (InterruptedException e) {}
+		log("Open compare page");
 		getCompareLink().get(1).click();
 	}
 	

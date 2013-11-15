@@ -1,8 +1,7 @@
 package pn.tests;
 
-import org.testng.SkipException;
-import org.testng.annotations.Test;
 
+import org.testng.annotations.Test;
 import pn.components.ListOfCategories;
 import pn.dataProvider.DataProviderTest;
 import pn.helpers.ListOfCategoriesHelper;
@@ -13,7 +12,6 @@ public class CheckMinMaxTest extends BaseTest {
 	@Test(dataProvider = "readForTest", dataProviderClass = DataProviderTest.class)
 	public void checkMinMaxFolter(String section, String category, double min,
 			double max) {
-		try {
 			
 			ListOfCategories listOfCategoryPage = goToMailPage();
 			ListOfCategoriesHelper
@@ -26,9 +24,6 @@ public class CheckMinMaxTest extends BaseTest {
 			ProductsListHelper.sortProductsByMinMax(min, max);
 			ProductsListHelper.checkSortedListOfProductsByMinMax();
 
-		} catch (NullPointerException e) {
-			throw new SkipException("Some element is NOT FOUND!Maybe you have entered INCORRECT DATA!");
-		}
 
 	}
 
