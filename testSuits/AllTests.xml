@@ -3,7 +3,7 @@
 	<listeners>
 		<listener class-name="pn.reporting.TakeScreenShot" />
 	</listeners>
-	<test name="TestSuite" enabled="true" preserve-order="true">
+	<test name="RunRegressionTests" enabled="true" preserve-order="true">
 		<classes>
 			<class name="pn.tests.SortedProductsTest"></class>
 			<class name="pn.tests.CompareProducts"></class>

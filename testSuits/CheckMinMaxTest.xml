@@ -3,7 +3,7 @@
 	<listeners>
 		<listener class-name="pn.reporting.TakeScreenShot" />
 	</listeners>
-	<test name="Test3" enabled="true">
+	<test name="CheckMinMaxPriceTest" enabled="true">
 		<classes>
 			<class name="pn.tests.CheckMinMaxTest"></class>
 		</classes>

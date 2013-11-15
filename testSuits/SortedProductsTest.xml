@@ -3,7 +3,7 @@
 	<listeners>
 		<listener class-name="pn.reporting.TakeScreenShot" />
 	</listeners>
-	<test name="Test1" enabled="true">
+	<test name="SortedProductsTest" enabled="true">
 		<classes>
 			<class name="pn.tests.SortedProductsTest">
 			<methods>

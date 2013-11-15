@@ -3,7 +3,7 @@
 	<listeners>
 		<listener class-name="pn.reporting.TakeScreenShot" />
 	</listeners>
-	<test name="Test2" enabled="true">
+	<test name="CompareProducts" enabled="true">
 		<classes>
 			<class name="pn.tests.CompareProducts"></class>
 		</classes>
